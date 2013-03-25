@@ -25,7 +25,7 @@ function PlayerViewModel() {
 			self.chosenMailData(null);
 			self.chosenAlbumsInLibrary(null);
 			   	
-			lastfmApi.artist.getSimilar('the xx', 50, self.chosenFolderData);
+			lastfmApi.chart.getTopArtists(self.chosenFolderData);
 		});
 		this.get('#library/albums', function(){
 			self.chosenFolderId(this.params.folder);
@@ -46,7 +46,7 @@ function PlayerViewModel() {
 			self.chosenAlbumsInLibrary(null);
 				        
 			lastfmApi.artist.getInfo(artist, self.chosenArtistData);
-				        
+			/*	        
 			lastfmApi.artist.getTopTracks(artist, 5, function(data){
 				var requestsToVK = [];
 				for (var trackIndex in data.toptracks.track) {
@@ -67,8 +67,10 @@ function PlayerViewModel() {
 					self.chosenArtistTopSongs({ songs: topSongs });
 				});
 			});
+			*/
 			lastfmApi.artist.getTopAlbums(artist, self.chosenArtistAlbums);
-		});
+		}); 
+		
 		this.get('', function() { this.app.runRoute('get', '#Artists') });
 	}).run();   
 			
@@ -87,6 +89,7 @@ function PlayerViewModel() {
 	self.goToAlbum = function(album) { 
 		self.chosenFolderData(null); // Stop showing a folder
 		self.chosenMailData(null);
+		self.chosenArtistAlbums(null);
 		lastfmApi.album.getInfo(album.artist.name, album.name, self.chosenAlbumData);
 	}
 			    

@@ -31,6 +31,18 @@ var lastfmApi = (function(){
 	    
 	}());	
 	
+	var chart = (function () { 
+		
+		var getTopArtists = function(callback){
+			$.get("http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=" + key + "&format=json", callback);
+		}
+		
+		return {
+			getTopArtists: getTopArtists
+		};
+		
+	}());
+	
 	var album = (function(){
 		
 		var getInfo = function(artist, album, callback){
@@ -45,7 +57,8 @@ var lastfmApi = (function(){
 	
 	return {
 		artist: artist,
-		album: album
+		album: album,
+		chart: chart
 	};
 	
 })();

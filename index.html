@@ -19,23 +19,69 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-		<div class="panel" id="panel">
-			<!-- Folders -->
-			<ul class="buttons" data-bind="foreach: folders">
-			    <li data-bind="text: $data, 
-			                   css: { selected: $data == $root.chosenFolderId() },
-			                   click: $root.goToFolder"></li>
-			</ul>
-		</div>
+        
+        <div class="navbar navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <div class="nav-collapse collapse">
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    
+	    <div class="player">
+	    	
+	    </div>
 		
-		<div class="search">
-			<form data-bind="submit: searchAlbum">
-				<input name="q">
-			    <button type="submit">Submit</button>
-			</form>
-		</div>
-		
-		<div id="container" class="container">	
+		<div id="container" class="container content">	
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="playlist">
+						<strong>Playlist</strong>	
+					</div>
+				</div>
+				<div class="span9">
+					
+					<!-- Album grid -->
+					<div class="album" data-bind="with: chosenAlbumData">
+						<h1 data-bind="text: album.name"></h1>
+						<button data-bind="click: $root.qw">Add Album To Playlist</button>
+					    <ul data-bind="foreach: album.tracks.track">
+					        <li>
+					            <span data-bind="text: name"></span>
+					        </li>     
+					    </ul>
+					</div>
+					
+					<!-- Artists grid -->
+					<div class="artists" data-bind="with: chosenFolderData">
+					    <ul data-bind="foreach: artists.artist">
+					        <li data-bind="click: $root.goToArtist">
+					            <span data-bind="text: name"></span>
+					            <img data-bind="attr: { src: image[2]['#text'].splice( 37, 0, 's' ) }">
+					        </li>     
+					    </ul>
+					</div>
+					
+					<!-- Chosen mail -->
+					<div class="viewMail" data-bind="with: chosenArtistData">
+							<div class="info">
+					        	<h1 data-bind="text: artist.name"></h1>
+					        </div>
+						    <div class="albums" data-bind="with: $root.chosenArtistAlbums">
+								<ul data-bind="foreach: topalbums.album">
+									        <li data-bind="click: $root.goToAlbum">
+									            <span data-bind="text: name"></span>
+									            <img data-bind="attr: { src: image[2]['#text'] }">
+									        </li>     
+								</ul>
+							 </div>
+					        </div>
+					    </div>
+					</div>
+					
+				</div>
+			</div>
 		
 			<!-- Library by albums grid -->
 			<div>
@@ -51,56 +97,6 @@
 			    </ul>
 			</div>
 			
-			<!-- Album grid -->
-			<div class="album" data-bind="with: chosenAlbumData">
-				<h1 data-bind="text: album.name"></h1>
-				<button data-bind="click: $root.qw">Add Album To Playlist</button>
-			    <ul data-bind="foreach: album.tracks.track">
-			        <li>
-			            <span data-bind="text: name"></span>
-			        </li>     
-			    </ul>
-			</div>
-			
-			<!-- Artists grid -->
-			<div class="artists" data-bind="with: chosenFolderData">
-			    <ul data-bind="foreach: similarartists.artist">
-			        <li data-bind="click: $root.goToArtist">
-			            <span data-bind="text: name"></span>
-			            <img data-bind="attr: { src: image[2]['#text'].splice( 37, 0, 's' ) }">
-			        </li>     
-			    </ul>
-			</div>
-			
-			<!-- Chosen mail -->
-			<div class="viewMail" data-bind="with: chosenArtistData">
-			    <div class="mailInfo">
-			        <h1 data-bind="text: artist.name"></h1>
-			        <div class="row-fluid">
-			        	<div class="span6">
-				        	<div class="albums" data-bind="with: $root.chosenArtistAlbums">
-						        <ul data-bind="foreach: topalbums.album">
-							        <li data-bind="click: $root.goToAlbum">
-							            <span data-bind="text: name"></span>
-							            <img data-bind="attr: { src: image[2]['#text'] }">
-							        </li>     
-							    </ul>
-					        </div>
-			        	</div>
-			        	<div class="span6">
-			        		<div class="songs" data-bind="with: $root.chosenArtistTopSongs">
-						        <ul data-bind="foreach: songs">
-							        <li>	
-							            <strong data-bind="text: artist"></strong>
-							            <span data-bind="text: song"></span>
-							            <audio data-bind="attr: { src: url }" controls></audio>
-							        </li>     
-							    </ul>
-					        </div>
-			        	</div>
-			        </div>
-			    </div>
-			</div>
 		</div>
 		
 		<script src="js/vendor/jquery.js"></script>
